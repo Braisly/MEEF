@@ -5,6 +5,8 @@
  */
 package View;
 
+import java.util.Date;
+
 /**
  *
  * @author lala
@@ -66,6 +68,12 @@ public class ConectionStatusPane extends javax.swing.JPanel {
     
     public void setRetrayalTime(float seconds){
         connectionStatusTextField.setToolTipText("Próxima actualización:" + String.valueOf(seconds) + "segundos");
+    }
+    
+    public void setNextConnectionTimeInFifteenMinutes(){
+        Date now = new Date();
+        now.setTime(now.getTime() + 900000l);
+        connectionStatusTextField.setToolTipText("Próxima actualización a las" + now.toString() );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

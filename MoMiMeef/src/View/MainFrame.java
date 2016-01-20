@@ -2,8 +2,13 @@ package View;
 
 import DB.ConnectSqlite;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -14,6 +19,8 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    private final UpdateWorker worker;
+    
     public MainFrame() {
         initComponents();
         LoadingDialog dia = new LoadingDialog(this, false, 3);
@@ -21,8 +28,26 @@ public class MainFrame extends javax.swing.JFrame {
         initDefaultTables(dia);
         changeTabbedPaneLook();
         this.setExtendedState(MAXIMIZED_BOTH);
+        worker = new UpdateWorker(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                conectionStatusPane1.setConectionStatus("Conectado");
+                conectionStatusPane1.setNextConnectionTimeInFifteenMinutes();
+            }
+        });
+        
+      
     }
 
+    public void startWorker(){
+        try {
+            worker.doInBackground();
+        } catch (Exception ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void initDefaultTables(LoadingDialog dia) {
         TableTabbedPane.add("Futuros", new Futuros_table());
         dia.taskComplete();
@@ -523,5 +548,29 @@ public class MainFrame extends javax.swing.JFrame {
         List setWallets = dbWallets.showAllWallets();
         availableWalletList.setListData(setWallets.toArray());
         availableCarterasList.setListData(setWallets.toArray());
+    }
+    
+    
+    
+    private class UpdateWorker extends SwingWorker<Void, Void>{
+    
+        private final ActionListener listener;
+
+        public UpdateWorker(ActionListener listener) {
+            this.listener = listener;
+        }
+        
+
+        @Override
+        protected Void doInBackground() throws Exception {
+            while(!this.isCancelled()){
+                conectionStatusPane1.setConectionStatus("Conectado");
+                Thread.sleep(900000); //cada 15 min 900K
+                //Thread.sleep(10000);
+                
+            }//Ajustado para que cada minuto haga algo
+            return null;
+        }
+    
     }
 }
