@@ -57,6 +57,8 @@ public class Call_options extends javax.swing.JPanel {
         addToAWallet = new javax.swing.JButton();
         walletComboBox = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        numOptionsCombobox = new javax.swing.JComboBox();
 
         setPreferredSize(new java.awt.Dimension(1131, 461));
 
@@ -103,6 +105,12 @@ public class Call_options extends javax.swing.JPanel {
             }
         });
         table.setDoubleBuffered(true);
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         addToAWallet.setText("Añadir a una cartera");
@@ -125,6 +133,10 @@ public class Call_options extends javax.swing.JPanel {
 
         jLabel2.setText("Cartera de destino:");
 
+        jLabel3.setText("Número de opciones compradas:");
+
+        numOptionsCombobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,12 +145,16 @@ public class Call_options extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(numOptionsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(walletComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(addToAWallet)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cb, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -154,9 +170,11 @@ public class Call_options extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(addToAWallet)
                     .addComponent(walletComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(numOptionsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -189,9 +207,9 @@ public class Call_options extends javax.swing.JPanel {
         //TODO obtener los índices de los seleccionados.
         int[] selectedIndex = table.getSelectedRows();
         //Insertar todas las opciones en la base de datos.
-        for (int i = 0; i < selectedIndex.length; i++) {
+        /*for (int i = 0; i < selectedIndex.length; i++) {
             connect.insertarOpcionEnCartera(wallet, call_options.get(selectedIndex[i]));
-        }
+        }*/
         connect.desconectar();
     }//GEN-LAST:event_addToAWalletActionPerformed
 
@@ -207,13 +225,33 @@ public class Call_options extends javax.swing.JPanel {
         updateWalletComboBox();
     }//GEN-LAST:event_walletComboBoxMouseClicked
 
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        //TODO Obtener la cantidad de la tabla.
+       int row = this.table.getSelectedRow();
+        String value = this.table.getModel().getValueAt(row, 3).toString(); //TODO cuando se cambie el modelo de las opciones cambiar esto?
+        try {
+            Integer amount = Integer.parseInt(value);
+            numOptionsCombobox.removeAllItems();
+
+            for (Integer i = 1; i <= amount; i++) {
+                numOptionsCombobox.addItem(i.toString());
+            }
+        } catch (Exception e) {
+            numOptionsCombobox.removeAllItems();
+            numOptionsCombobox.addItem("-");
+            return;
+        }
+    }//GEN-LAST:event_tableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addToAWallet;
     private javax.swing.JComboBox cb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox numOptionsCombobox;
     private javax.swing.JTable table;
     private javax.swing.JComboBox walletComboBox;
     // End of variables declaration//GEN-END:variables

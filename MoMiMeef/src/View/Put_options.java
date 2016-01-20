@@ -27,6 +27,7 @@ public class Put_options extends javax.swing.JPanel {
      */
     private ServerAccess.MEFF_Opciones conection;
     private ArrayList<Opcion> put_options;
+
     public Put_options() {
         initComponents();
         conection = new MEFF_Opciones();
@@ -47,6 +48,7 @@ public class Put_options extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         cb = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -54,8 +56,12 @@ public class Put_options extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         walletComboBox = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        numOptionsCombobox = new javax.swing.JComboBox();
 
         setPreferredSize(new java.awt.Dimension(1131, 461));
+
+        jLabel4.setText("Número de opciones compradas:");
 
         jLabel1.setText("Ordenar por fecha");
 
@@ -99,6 +105,11 @@ public class Put_options extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         jButton1.setText("Añadir selección a cartera");
@@ -110,6 +121,10 @@ public class Put_options extends javax.swing.JPanel {
 
         jLabel2.setText("Cartera de destino:");
 
+        jLabel3.setText("Número de opciones compradas:");
+
+        numOptionsCombobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,17 +133,26 @@ public class Put_options extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(numOptionsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(walletComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 448, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cb, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(487, 487, 487)
+                    .addComponent(jLabel3)
+                    .addContainerGap(488, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,24 +163,31 @@ public class Put_options extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(jButton1)
                     .addComponent(walletComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(numOptionsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(223, 223, 223)
+                    .addComponent(jLabel3)
+                    .addContainerGap(224, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbItemStateChanged
-        if(evt.getStateChange() == ItemEvent.SELECTED){
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
             String item = evt.getItem().toString();
-            if (item.equals("Mostrar todo")){
+            if (item.equals("Mostrar todo")) {
                 updateTable();
                 return;
             }
             cleanTable();
             DefaultTableModel tableData = (DefaultTableModel) table.getModel();
             for (Opcion call_option : put_options) {
-                if(call_option.Vencimiento.equals(item)){
+                if (call_option.Vencimiento.equals(item)) {
                     tableData.addRow(call_option.toArray());
                 }
             }
@@ -174,11 +205,32 @@ public class Put_options extends javax.swing.JPanel {
         //TODO obtener los índices de los seleccionados.
         int[] selectedIndex = table.getSelectedRows();
         //Insertar todas las opciones en la base de datos.
-        for (int i = 0; i < selectedIndex.length; i++) {
-            connect.insertarOpcionEnCartera(wallet, put_options.get(selectedIndex[i]));
-        }
+        /*for (int i = 0; i < selectedIndex.length; i++) {
+         connect.insertarOpcionEnCartera(wallet, put_options.get(selectedIndex[i]));
+         }*/
         connect.desconectar();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        //TODO Obtener la cantidad de la tabla.
+        int row = this.table.getSelectedRow();
+        String value = this.table.getModel().getValueAt(row, 3).toString(); //TODO cuando se cambie el modelo de las opciones cambiar esto?
+        try {
+            Integer amount = Integer.parseInt(value);
+            numOptionsCombobox.removeAllItems();
+
+            for (Integer i = 1; i <= amount; i++) {
+                numOptionsCombobox.addItem(i.toString());
+            }
+        } catch (Exception e) {
+            numOptionsCombobox.removeAllItems();
+            numOptionsCombobox.addItem("-");
+            return;
+        }
+        //Actualizar el combobox
+
+
+    }//GEN-LAST:event_tableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -186,29 +238,32 @@ public class Put_options extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox numOptionsCombobox;
     private javax.swing.JTable table;
     private javax.swing.JComboBox walletComboBox;
     // End of variables declaration//GEN-END:variables
 
     private void updateTable() {
-        if(conection.divideOptions()){
-            DefaultTableModel tableData = (DefaultTableModel)table.getModel();
+        if (conection.divideOptions()) {
+            DefaultTableModel tableData = (DefaultTableModel) table.getModel();
             for (Opcion opt : conection.OpcionesPUT) {
-               tableData.addRow(opt.toArray());
+                tableData.addRow(opt.toArray());
             }
         }
     }
-    
-    private void cleanTable(){
-        DefaultTableModel tableData = (DefaultTableModel)table.getModel();
+
+    private void cleanTable() {
+        DefaultTableModel tableData = (DefaultTableModel) table.getModel();
         int rows = tableData.getRowCount();
-        for(int i = (rows-1); i >=0;i-- ){
+        for (int i = (rows - 1); i >= 0; i--) {
             tableData.removeRow(i);
         }
     }
-    
-      private void updateComboBox() {
+
+    private void updateComboBox() {
         DefaultTableModel tableData = (DefaultTableModel) table.getModel();
         //el vencimiento es la tabla 8.
         cb.removeAllItems();
@@ -216,17 +271,18 @@ public class Put_options extends javax.swing.JPanel {
         Vector<Vector> rows = (Vector) tableData.getDataVector();
         Set<String> cbModel = new TreeSet<String>();
         for (Vector row : rows) {
-            if(cbModel.add((String)row.elementAt(7)))
+            if (cbModel.add((String) row.elementAt(7))) {
                 cb.addItem(row.elementAt(7));
+            }
         }
 
     }
-      
-       private void updateWalletComboBox() {
+
+    private void updateWalletComboBox() {
         ConnectSqlite connection = new ConnectSqlite();
         List l = connection.showAllWallets();
         connection.desconectar();
-        
+
         walletComboBox.removeAllItems();
 
         for (Object l1 : l) {
