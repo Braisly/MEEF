@@ -186,6 +186,9 @@ public class ConnectSqlite {
         str += opt.Ejercicio;
         str +="',";
         str +="'";
+        str += CurrentDate();
+        str +="',";
+        str +="'";
         str += opt.Venta_Precio;
         str +="',";
         str +="'";
@@ -220,7 +223,7 @@ public class ConnectSqlite {
         str += opt.Ejercicio;
         str += "' AND ";
         str += "DateBuy LIKE '";
-        str += opt.FechaCompra;
+        str += CurrentDate();
         str += "' AND ";
         str += " Price_Sale LIKE '";
         str += opt.Venta_Precio;
@@ -237,7 +240,7 @@ public class ConnectSqlite {
     }
     public String CurrentDate() {
        Calendar calendario = GregorianCalendar.getInstance();
-       SimpleDateFormat formato = new SimpleDateFormat("d/MMM/yyyy");
+       SimpleDateFormat formato = new SimpleDateFormat("d MMM yyyy");
        return formato.format(calendario.getTime());
     }
     public int lookOptionWallet(String cartera, Opcion opt,String amount){

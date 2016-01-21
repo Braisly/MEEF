@@ -181,6 +181,7 @@ public class Cartera_table extends javax.swing.JPanel {
         DefaultTableModel tableData = (DefaultTableModel) table.getModel();
 
         for (Opcion opt : wallet.getOpciones()) {
+            System.out.println("Entrar " + opt.toString());
             tableData.addRow(opt.showWallet());
         }
         

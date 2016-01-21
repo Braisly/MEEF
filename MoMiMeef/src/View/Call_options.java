@@ -217,9 +217,9 @@ public class Call_options extends javax.swing.JPanel {
         //TODO obtener los índices de los seleccionados.
         int[] selectedIndex = table.getSelectedRows();
         //Insertar todas las opciones en la base de datos.
-        /*for (int i = 0; i < selectedIndex.length; i++) {
-            connect.insertarOpcionEnCartera(wallet, call_options.get(selectedIndex[i]));
-        }*/
+        for (int i = 0; i < selectedIndex.length; i++) {
+            connect.insertarOpcionEnCartera(wallet, call_options.get(selectedIndex[i]),"0");
+        }
         connect.desconectar();
     }//GEN-LAST:event_addToAWalletActionPerformed
 

@@ -21,7 +21,7 @@ import javax.swing.table.TableCellRenderer;
  */
 public class HighLightPassedDates extends AlternateColorJTable {
 
-    @Override
+    /*@Override
     public Component prepareRenderer(TableCellRenderer renderer, int Index_row, int Index_col) {
         Component c = super.prepareRenderer(renderer, Index_row, Index_col); //To change body of generated methods, choose Tools | Templates.
         
@@ -44,7 +44,7 @@ public class HighLightPassedDates extends AlternateColorJTable {
             System.out.println("Parse error");
         }
         return false;
-    }
+    }*/
     
     
 }

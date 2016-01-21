@@ -39,7 +39,7 @@ public class Opcion {
     }
     @Override
     public String toString(){
-        String resultado = this.Hora + " " + this.Volumen + " " + this.Ultimo + " " + this.Compra_Vol + " " + this.Compra_Precio + " " + this.Venta_Vol + this.Venta_Precio + " " + this.Vencimiento + " " + this.Ejercicio + " " + this.Tipo;
+        String resultado = this.Cantidad + " " + this.Tipo + " " + this.Vencimiento + " " + this.Ejercicio + " " + this.FechaCompra + " " + this.Venta_Precio;
         return resultado;
     }
 }
