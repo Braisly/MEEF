@@ -24,7 +24,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     public MainFrame() {
         initComponents();
-        LoadingDialog dia = new LoadingDialog(this, false, 3);
+        LoadingDialog dia = new LoadingDialog(this, false, 4);
         dia.setVisible(true);
         initDefaultTables(dia);
         changeTabbedPaneLook();
@@ -43,6 +43,8 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public void initDefaultTables(LoadingDialog dia) {
+        TableTabbedPane.add("Contado", new Contado_table());
+        dia.taskComplete();
         TableTabbedPane.add("Futuros", new Futuros_table());
         dia.taskComplete();
         TableTabbedPane.add("Opciones CALL", new Call_options());
@@ -91,7 +93,6 @@ public class MainFrame extends javax.swing.JFrame {
         TableTabbedPane = new javax.swing.JTabbedPane();
         menuBar = new javax.swing.JMenuBar();
         menuBarFileSpot = new javax.swing.JMenu();
-        connectButton = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -101,6 +102,7 @@ public class MainFrame extends javax.swing.JFrame {
         infoDialog.setModal(true);
         infoDialog.setResizable(false);
 
+        infoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/logo.png"))); // NOI18N
         infoIcon.setText("Icon");
 
         infoHeader.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -339,10 +341,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         menuBarFileSpot.setText("General");
 
-        connectButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        connectButton.setText("Conectar ahora");
-        menuBarFileSpot.add(connectButton);
-
         aboutMenuItem.setText("Sobre MoMiMeef");
         aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -486,7 +484,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JList availableCarterasList;
     private javax.swing.JList availableWalletList;
     private View.ConectionStatusPane conectionStatusPane1;
-    private javax.swing.JMenuItem connectButton;
     private javax.swing.JButton createNewCartera;
     private javax.swing.JDialog createWalletDialog;
     private javax.swing.JLabel developerCredit;
@@ -556,18 +553,21 @@ public class MainFrame extends javax.swing.JFrame {
         @Override
         protected Void doInBackground() throws Exception {
             while(!this.isCancelled()){
-                conectionStatusPane1.setConectionStatus("Conectado");
+                conectionStatusPane1.setConectionStatus("Actualizado");
                 conectionStatusPane1.setNextConnectionTimeInFifteenMinutes();
-                //Thread.sleep(900000); //cada 15 min 900K
-                Thread.sleep(10000); //para pruebas 
-                Call_options ctab = (Call_options)TableTabbedPane.getComponentAt(1);
+                Thread.sleep(900000); //cada 15 min 900K
+                //Thread.sleep(10000); //para pruebas 
+                Call_options ctab = (Call_options)TableTabbedPane.getComponentAt(2);
                 ctab.updateInfo();
                 
-                Put_options ptab = (Put_options) TableTabbedPane.getComponent(2);
+                Put_options ptab = (Put_options) TableTabbedPane.getComponent(3);
                 ptab.updateInfo();
                 
-                Futuros_table ftab = (Futuros_table) TableTabbedPane.getComponentAt(0);
+                Futuros_table ftab = (Futuros_table) TableTabbedPane.getComponentAt(1);
                 ftab.updateInfo();
+                
+                Contado_table contTab = (Contado_table) TableTabbedPane.getComponentAt(0);
+                contTab.updateInfo();
             }
             return null;
         }

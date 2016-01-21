@@ -34,6 +34,17 @@ public class MEFF_Contado {
         return Float.valueOf(texto);
     }
     
+    public Object[] toArray(){
+        Object[] result = new Object[6];
+        result[0] = this.Spot;
+        result[1] = this.Diferencia;
+        result[2] = this.Hora;
+        result[3] = this.Anterior;
+        result[4] = this.Maximo;
+        result[5] = this.Minimo;
+        return result;
+    }
+    
     public boolean getSpot(){
          
         int trial = ntrials;
