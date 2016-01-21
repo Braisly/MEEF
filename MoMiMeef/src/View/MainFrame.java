@@ -565,6 +565,9 @@ public class MainFrame extends javax.swing.JFrame {
                 
                 Put_options ptab = (Put_options) TableTabbedPane.getComponent(2);
                 ptab.updateInfo();
+                
+                Futuros_table ftab = (Futuros_table) TableTabbedPane.getComponentAt(0);
+                ftab.updateInfo();
             }
             return null;
         }
