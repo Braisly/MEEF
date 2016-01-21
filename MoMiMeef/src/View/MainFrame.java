@@ -187,6 +187,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        manageDialog.setTitle("Gestionar Carteras");
+
         availableCarterasList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(availableCarterasList);
 
@@ -246,6 +248,8 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
+
+        createWalletDialog.setTitle("Nueva cartera");
 
         jLabel3.setText("Nombre de la nueva cartera");
 

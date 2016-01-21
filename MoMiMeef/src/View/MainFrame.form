@@ -149,6 +149,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="manageDialog">
+      <Properties>
+        <Property name="title" type="java.lang.String" value="Gestionar Carteras"/>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -242,6 +245,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="createWalletDialog">
+      <Properties>
+        <Property name="title" type="java.lang.String" value="Nueva cartera"/>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
