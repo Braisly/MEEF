@@ -232,6 +232,15 @@ public class Put_options extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tableMouseClicked
 
+     public void updateInfo(){
+        System.out.println("Test flag2");
+        conection.divideOptions();
+        put_options = conection.OpcionesPUT;
+        cleanTable();
+        updateTable();
+        updateComboBox();
+        updateWalletComboBox();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cb;

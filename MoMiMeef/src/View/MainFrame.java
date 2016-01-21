@@ -560,8 +560,12 @@ public class MainFrame extends javax.swing.JFrame {
                 conectionStatusPane1.setNextConnectionTimeInFifteenMinutes();
                 //Thread.sleep(900000); //cada 15 min 900K
                 Thread.sleep(10000); //para pruebas 
+                Call_options ctab = (Call_options)TableTabbedPane.getComponentAt(1);
+                ctab.updateInfo();
                 
-            }//Ajustado para que cada minuto haga algo
+                Put_options ptab = (Put_options) TableTabbedPane.getComponent(2);
+                ptab.updateInfo();
+            }
             return null;
         }
     

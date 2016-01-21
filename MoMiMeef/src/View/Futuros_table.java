@@ -27,6 +27,12 @@ public class Futuros_table extends javax.swing.JPanel {
         updateTable();
     }
 
+     public void updateInfo(){
+        System.out.println("Test flag3");
+        cleanTable();
+        updateTable();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
