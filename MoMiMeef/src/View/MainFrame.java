@@ -1,6 +1,7 @@
 package View;
 
 import DB.ConnectSqlite;
+import ServerAccess.MEFF_Futuros;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,14 +29,7 @@ public class MainFrame extends javax.swing.JFrame {
         initDefaultTables(dia);
         changeTabbedPaneLook();
         this.setExtendedState(MAXIMIZED_BOTH);
-        worker = new UpdateWorker(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                conectionStatusPane1.setConectionStatus("Conectado");
-                conectionStatusPane1.setNextConnectionTimeInFifteenMinutes();
-            }
-        });
+        worker = new UpdateWorker();
         
       
     }
@@ -554,10 +548,8 @@ public class MainFrame extends javax.swing.JFrame {
     
     private class UpdateWorker extends SwingWorker<Void, Void>{
     
-        private final ActionListener listener;
 
-        public UpdateWorker(ActionListener listener) {
-            this.listener = listener;
+        public UpdateWorker() {
         }
         
 
@@ -565,8 +557,9 @@ public class MainFrame extends javax.swing.JFrame {
         protected Void doInBackground() throws Exception {
             while(!this.isCancelled()){
                 conectionStatusPane1.setConectionStatus("Conectado");
-                Thread.sleep(900000); //cada 15 min 900K
-                //Thread.sleep(10000);
+                conectionStatusPane1.setNextConnectionTimeInFifteenMinutes();
+                //Thread.sleep(900000); //cada 15 min 900K
+                Thread.sleep(10000); //para pruebas 
                 
             }//Ajustado para que cada minuto haga algo
             return null;

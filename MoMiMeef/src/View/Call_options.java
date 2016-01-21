@@ -40,6 +40,16 @@ public class Call_options extends javax.swing.JPanel {
         updateComboBox();
         updateWalletComboBox();
     }
+    
+    public void updateInfo(){
+        System.out.println("Test flag");
+        conection.divideOptions();
+        call_options = conection.OpcionesCALL;
+        cleanTable();
+        updateTable();
+        updateComboBox();
+        updateWalletComboBox();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
