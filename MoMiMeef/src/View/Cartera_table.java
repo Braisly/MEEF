@@ -33,6 +33,7 @@ public class Cartera_table extends javax.swing.JPanel {
         initComponents();
         cleanTable();
         updateTable();
+        updateGeneralInformation();
         this.parent = p;
     }
 
@@ -50,6 +51,11 @@ public class Cartera_table extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        generalPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        investmentTextField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        gainTextField = new javax.swing.JTextField();
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -101,17 +107,57 @@ public class Cartera_table extends javax.swing.JPanel {
             }
         });
 
+        generalPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Información General"));
+
+        jLabel1.setText("Inversión total en esta cartera:");
+
+        investmentTextField.setEditable(false);
+
+        jLabel2.setText("Ganancias en el conjunto de todas las opciones:");
+
+        gainTextField.setEditable(false);
+
+        javax.swing.GroupLayout generalPanelLayout = new javax.swing.GroupLayout(generalPanel);
+        generalPanel.setLayout(generalPanelLayout);
+        generalPanelLayout.setHorizontalGroup(
+            generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(generalPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(investmentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        generalPanelLayout.setVerticalGroup(
+            generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(generalPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(investmentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(gainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 531, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(generalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 531, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -127,11 +173,13 @@ public class Cartera_table extends javax.swing.JPanel {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(generalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(273, 273, 273))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(39, 39, 39)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(122, 122, 122)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -158,21 +206,25 @@ public class Cartera_table extends javax.swing.JPanel {
 
     
     private void refreshWallet(){
-        //cleanTable();
         ConnectSqlite connection = new ConnectSqlite();
         String name = this.wallet.getId();
-        //connection.selectOptionsFromWallet(name);
         this.wallet = new Cartera(name);
         fillWallet(connection);
         connection.desconectar();
         cleanTable();
         updateTable();
+        updateGeneralInformation();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField gainTextField;
+    private javax.swing.JPanel generalPanel;
+    private javax.swing.JTextField investmentTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
@@ -208,7 +260,7 @@ public class Cartera_table extends javax.swing.JPanel {
                 if(opt.Ejercicio.equals(option.Ejercicio) && opt.Vencimiento.equals(option.Vencimiento)){
                     opt.Precio_Vender = option.Compra_Precio;
                     if(!opt.Precio_Vender.equals("-") && !opt.Venta_Precio.equals("-")){
-                        double ganancia = Double.parseDouble(opt.Precio_Vender.replace(",",".")) - Double.parseDouble(opt.Venta_Precio.replace(",", "."));
+                        double ganancia =  Double.parseDouble(opt.Venta_Precio.replace(",", ".")) - Double.parseDouble(opt.Precio_Vender.replace(",","."));
                         String Ganancia = String.valueOf(ganancia);
                         opt.Ganancia = Ganancia.replace(".",",");
                     }else{
@@ -221,7 +273,7 @@ public class Cartera_table extends javax.swing.JPanel {
                 if(opt.Ejercicio.equals(option.Ejercicio) && opt.Vencimiento.equals(option.Vencimiento)){
                     opt.Precio_Vender = option.Compra_Precio; 
                     if(!opt.Precio_Vender.equals("-") && !opt.Venta_Precio.equals("-")){
-                        double ganancia = Double.parseDouble(opt.Precio_Vender.replace(",",".")) - Double.parseDouble(opt.Venta_Precio.replace(",", "."));
+                        double ganancia = Double.parseDouble(opt.Venta_Precio.replace(",", ".")) - Double.parseDouble(opt.Precio_Vender.replace(",","."));
                         String Ganancia = String.valueOf(ganancia);
                         opt.Ganancia = Ganancia.replace(".",",");
                     }else{
@@ -231,5 +283,28 @@ public class Cartera_table extends javax.swing.JPanel {
             }
         }
         return opt;
+    }
+
+    private void updateGeneralInformation() {
+        Double totalGain = getTotalGain();
+        gainTextField.setText(totalGain.toString());
+        double investment = getTotalInvestment();
+        investmentTextField.setText(String.valueOf(investment));
+    }
+
+    private double getTotalGain() {
+        double result = 0;
+        for (Opcion opt : wallet.getOpciones()) {
+            result += Double.parseDouble(opt.Ganancia.replace(",", "."));
+        }
+        return result;
+    }
+
+    private double getTotalInvestment() {
+        double result = 0;
+        for (Opcion opt : wallet.getOpciones()) {
+            result += Double.parseDouble(opt.Precio_Vender.replace(",", "."));
+        }
+        return result;
     }
 }

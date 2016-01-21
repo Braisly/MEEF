@@ -19,7 +19,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author lala
  */
-/*public class HighLightPassedDates extends AlternateColorJTable {
+public class HighLightPassedDates extends AlternateColorJTable {
 
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int Index_row, int Index_col) {
@@ -47,4 +47,4 @@ import javax.swing.table.TableCellRenderer;
     }
     
     
-}*/
+}
