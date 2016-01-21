@@ -7,7 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ConnectSqlite {
@@ -136,16 +139,12 @@ public class ConnectSqlite {
             while (resultSet.next()){
                 Opcion partialResult = new Opcion();
                 //TODO obtener cada campo y asignarselo a la opcion
-                partialResult.Hora = resultSet.getString("Hour");
-                partialResult.Volumen = resultSet.getString("Volume");
-                partialResult.Ultimo = resultSet.getString("Last");
-                partialResult.Compra_Vol = resultSet.getString("Volume_Buy");
-                partialResult.Compra_Precio = resultSet.getString("Price_Buy");
-                partialResult.Venta_Vol = resultSet.getString("Volume_Sale");
                 partialResult.Venta_Precio = resultSet.getString("Price_Sale");
                 partialResult.Vencimiento = resultSet.getString("Expiration");
                 partialResult.Ejercicio = resultSet.getString("Exercise");
                 partialResult.Tipo = resultSet.getString("Type");
+                partialResult.FechaCompra = resultSet.getString("DateBuy");
+                partialResult.Cantidad  = resultSet.getString("Amount");
                 //TODO añadir la opción al array list.
                 result.add(partialResult);
             }
@@ -157,7 +156,12 @@ public class ConnectSqlite {
     
     public void insertarOpcionEnCartera(String cartera, Opcion opt,String amount){
         //String insertWallet ="INSERT INTO setOptionsWallets (Name) VALUES " + "(" + name + ")";
-        String q=" INSERT INTO SetOptionsWallets (Amount,Type,Expiration,Exercise,Price_Sale,Name) VALUES ("+optionToInsertSQLString(opt,cartera,amount)+") ";
+        int endAmount = lookOptionWallet(cartera,opt,amount);
+        if(endAmount == 0){
+            endAmount = Integer.parseInt(amount);
+        }
+        String insertAmount = Integer.toString(endAmount);
+        String q=" INSERT INTO SetOptionsWallets (Amount,Type,Expiration,Exercise,DateBuy,Price_Sale,Name) VALUES ("+optionToInsertSQLString(opt,cartera,insertAmount)+") ";
         try {
            PreparedStatement pstm = connection.prepareStatement(q);
            pstm.execute();
@@ -203,35 +207,23 @@ public class ConnectSqlite {
 
     private String optionToDeleteSQLString(Opcion opt,String name) {
         String str = "";
-        str+= "Hour LIKE '";
-        str += opt.Hora;
+        str+= "Amount LIKE '";
+        str += opt.Cantidad;
         str +="' AND ";
-        str +="Volume LIKE '";
-        str += opt.Volumen;
+        str +="Type LIKE '";
+        str += opt.Tipo;
         str += "' AND ";
-        str += "Last LIKE '";
-        str += opt.Ultimo;
+        str += "Expiration LIKE '";
+        str += opt.Vencimiento;
         str += "' AND ";
-        str += "Volume_Buy LIKE '";
-        str += opt.Compra_Vol;
+        str += "Exercise LIKE '";
+        str += opt.Ejercicio;
         str += "' AND ";
-        str += "Price_Buy LIKE '";
-        str += opt.Compra_Precio;
-        str +="' AND ";
-        str += "Volume_Sale LIKE '";
-        str += opt.Venta_Vol;
+        str += "DateBuy LIKE '";
+        str += opt.FechaCompra;
         str += "' AND ";
         str += " Price_Sale LIKE '";
         str += opt.Venta_Precio;
-        str += "' AND ";
-        str += " Expiration LIKE '";
-        str += opt.Vencimiento;
-        str += "' AND ";
-        str += "Exercise  LIKE '";
-        str += opt.Ejercicio;
-        str += "' AND ";
-        str += "Type LIKE '";
-        str += opt.Tipo;
         str += "' AND ";
         str += "Name LIKE '";
         str += name;
@@ -242,5 +234,25 @@ public class ConnectSqlite {
         //String directorio = System.getProperty("java.class.path");
         File dir = new File("dbWallets.sqlite");
         return dir.getAbsolutePath();
+    }
+    public String CurrentDate() {
+       Calendar calendario = GregorianCalendar.getInstance();
+       SimpleDateFormat formato = new SimpleDateFormat("d/MMM/yyyy");
+       return formato.format(calendario.getTime());
+    }
+    public int lookOptionWallet(String cartera, Opcion opt,String amount){
+        String option = "" + "Type LIKE '" + opt.Tipo + "' AND " + "Expiration LIKE '" + opt.Vencimiento + "' AND " + "Exercise LIKE '" + opt.Ejercicio + "' AND " + "Price_Sale LIKE '" + opt.Venta_Precio + "'AND " + "DateBuy LIKE '" + CurrentDate() + "'AND " + "Name LIKE '" + cartera + "'";
+        try {
+            this.statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM SetOptionsWallets WHERE " + option +  ";");
+            if(resultSet.next()){
+                String Amount = resultSet.getString("Amount");
+                int endAmount = Integer.parseInt(Amount) + Integer.parseInt(amount);
+                return endAmount;
+            }
+        }catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return 0;
     }
 }

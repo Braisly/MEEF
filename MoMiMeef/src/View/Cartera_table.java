@@ -52,20 +52,20 @@ public class Cartera_table extends javax.swing.JPanel {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Hora", "Volumen", "Último", "Volumen_Compra", "Precio_Compra", "Volumen_Venta", "Precio_Venta", "Vencimiento", "Ejercicio", "Tipo"
+                "Cantidad", "Tipo", "Vencimiento", "Ejercicio", "Precio_Venta", "Fecha De Compra"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -181,7 +181,7 @@ public class Cartera_table extends javax.swing.JPanel {
         DefaultTableModel tableData = (DefaultTableModel) table.getModel();
 
         for (Opcion opt : wallet.getOpciones()) {
-            tableData.addRow(opt.toArray());
+            tableData.addRow(opt.showWallet());
         }
         
     }
