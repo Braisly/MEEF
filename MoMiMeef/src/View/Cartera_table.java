@@ -8,6 +8,7 @@ package View;
 import DB.ConnectSqlite;
 import Data.Cartera;
 import Data.Opcion;
+import ServerAccess.MEFF_Opciones;
 import java.util.ArrayList;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
@@ -52,20 +53,20 @@ public class Cartera_table extends javax.swing.JPanel {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Cantidad", "Tipo", "Vencimiento", "Ejercicio", "Precio_Venta", "Fecha De Compra"
+                "Cantidad", "Tipo", "Vencimiento", "Ejercicio", "Fecha de Compra", "Precio de Compra", "Precio de Venta", "Ganancia"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -181,8 +182,8 @@ public class Cartera_table extends javax.swing.JPanel {
         DefaultTableModel tableData = (DefaultTableModel) table.getModel();
 
         for (Opcion opt : wallet.getOpciones()) {
-            System.out.println("Entrar " + opt.toString());
-            tableData.addRow(opt.showWallet());
+            Opcion opcion = obtainFields(opt);
+            tableData.addRow(opcion.showWallet());
         }
         
     }
@@ -200,5 +201,35 @@ public class Cartera_table extends javax.swing.JPanel {
         for (int i = (rows - 1); i >= 0; i--) {
             tableData.removeRow(i);
         }
+    }
+    private Opcion obtainFields(Opcion opt){
+        if(opt.Tipo.equals("PUT")){
+            for(Opcion option: Put_options.getPut_options()){
+                if(opt.Ejercicio.equals(option.Ejercicio) && opt.Vencimiento.equals(option.Vencimiento)){
+                    opt.Precio_Vender = option.Compra_Precio;
+                    if(!opt.Precio_Vender.equals("-") && !opt.Venta_Precio.equals("-")){
+                        double ganancia = Double.parseDouble(opt.Precio_Vender.replace(",",".")) - Double.parseDouble(opt.Venta_Precio.replace(",", "."));
+                        String Ganancia = String.valueOf(ganancia);
+                        opt.Ganancia = Ganancia.replace(".",",");
+                    }else{
+                        opt.Ganancia = "0";
+                    }
+                }
+            }
+        }else{
+            for(Opcion option: Call_options.getCall_options()){
+                if(opt.Ejercicio.equals(option.Ejercicio) && opt.Vencimiento.equals(option.Vencimiento)){
+                    opt.Precio_Vender = option.Compra_Precio; 
+                    if(!opt.Precio_Vender.equals("-") && !opt.Venta_Precio.equals("-")){
+                        double ganancia = Double.parseDouble(opt.Precio_Vender.replace(",",".")) - Double.parseDouble(opt.Venta_Precio.replace(",", "."));
+                        String Ganancia = String.valueOf(ganancia);
+                        opt.Ganancia = Ganancia.replace(".",",");
+                    }else{
+                        opt.Ganancia = "0";
+                    }
+                }
+            }
+        }
+        return opt;
     }
 }

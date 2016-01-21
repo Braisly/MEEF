@@ -26,7 +26,7 @@ public class Put_options extends javax.swing.JPanel {
      * Creates new form Call_options
      */
     private ServerAccess.MEFF_Opciones conection;
-    private ArrayList<Opcion> put_options;
+    private static ArrayList<Opcion> put_options;
 
     public Put_options() {
         initComponents();
@@ -202,12 +202,13 @@ public class Put_options extends javax.swing.JPanel {
         ConnectSqlite connect = new ConnectSqlite();
         //TODO obtener la cartera de destino.Del combobox
         String wallet = walletComboBox.getSelectedItem().toString();
+        String amount =  numOptionsCombobox.getSelectedItem().toString();
         //TODO obtener los índices de los seleccionados.
         int[] selectedIndex = table.getSelectedRows();
         //Insertar todas las opciones en la base de datos.
-        /*for (int i = 0; i < selectedIndex.length; i++) {
-         connect.insertarOpcionEnCartera(wallet, put_options.get(selectedIndex[i]));
-         }*/
+        for (int i = 0; i < selectedIndex.length; i++) {
+         connect.insertarOpcionEnCartera(wallet, put_options.get(selectedIndex[i]),amount);
+        }
         connect.desconectar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -298,5 +299,7 @@ public class Put_options extends javax.swing.JPanel {
             walletComboBox.addItem(l1.toString());
         }
     }
-
+    public static ArrayList<Opcion> getPut_options() {
+        return put_options;
+    }
 }

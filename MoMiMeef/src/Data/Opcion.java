@@ -12,6 +12,8 @@ public class Opcion {
     public String Ejercicio;
     public String FechaCompra;
     public String Cantidad;
+    public String Ganancia;
+    public String Precio_Vender;
     
     public Object[] toArray() {
         Object[] result = new Object[12];
@@ -28,13 +30,15 @@ public class Opcion {
         return result;
     }
      public Object[] showWallet(){
-        Object [] result = new Object[7];
+        Object [] result = new Object[8];
         result[0] = Cantidad;
         result[1] = Tipo;
         result[2] = Vencimiento;
         result[3] = Ejercicio;
         result[4] = FechaCompra;
         result[5] = Venta_Precio;
+        result[6] = Precio_Vender;
+        result[7] = Ganancia;
         return result;
     }
     @Override
