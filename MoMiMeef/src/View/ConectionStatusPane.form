@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="connectionStatusTextField" pref="165" max="32767" attributes="0"/>
+              <Component id="connectionStatusTextField" pref="201" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -49,7 +49,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Estado de la conexi&#xf3;n"/>
+        <Property name="text" type="java.lang.String" value="Estado de los datos"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="connectionStatusTextField">

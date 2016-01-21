@@ -36,7 +36,7 @@ public class ConectionStatusPane extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(333, 38));
         setMinimumSize(new java.awt.Dimension(333, 38));
 
-        jLabel1.setText("Estado de la conexión");
+        jLabel1.setText("Estado de los datos");
 
         connectionStatusTextField.setEditable(false);
 
@@ -48,7 +48,7 @@ public class ConectionStatusPane extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(connectionStatusTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                .addComponent(connectionStatusTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
