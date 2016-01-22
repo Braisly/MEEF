@@ -33,7 +33,7 @@ public class HighLightPassedDates extends AlternateColorJTable {
     }
     private boolean thisDateIsPassed(int Index_row) {
         DefaultTableModel model =(DefaultTableModel) this.getModel();
-        String date = model.getValueAt(Index_row, 3).toString();//
+        String date = model.getValueAt(Index_row, 2).toString();//
         Date today = Calendar.getInstance().getTime();
         DateFormat format = new SimpleDateFormat("d MMM yyyy");
         try {

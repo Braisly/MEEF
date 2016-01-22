@@ -41,8 +41,8 @@ public class Call_options extends javax.swing.JPanel {
         updateComboBox();
         updateWalletComboBox();
     }
-    
-    public void updateInfo(){
+
+    public void updateInfo() {
         System.out.println("Test flag");
         conection.divideOptions();
         call_options = conection.OpcionesCALL;
@@ -190,21 +190,21 @@ public class Call_options extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbActionPerformed
-        
+
     }//GEN-LAST:event_cbActionPerformed
 
     private void cbItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbItemStateChanged
-        
-        if(evt.getStateChange() == ItemEvent.SELECTED){
+
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
             String item = evt.getItem().toString();
-            if (item.equals("Mostrar todo")){
+            if (item.equals("Mostrar todo")) {
                 updateTable();
                 return;
             }
             cleanTable();
             DefaultTableModel tableData = (DefaultTableModel) table.getModel();
             for (Opcion call_option : call_options) {
-                if(call_option.Vencimiento.equals(item)){
+                if (call_option.Vencimiento.equals(item)) {
                     tableData.addRow(call_option.toArray());
                 }
             }
@@ -215,16 +215,17 @@ public class Call_options extends javax.swing.JPanel {
         ConnectSqlite connect = new ConnectSqlite();
         //TODO obtener la cartera de destino.Del combobox
         String wallet = walletComboBox.getSelectedItem().toString();
-        String amount =  numOptionsCombobox.getSelectedItem().toString();
-        if(amount.contains("-")){
-            JOptionPane.showMessageDialog(null, "Error. No se ha seleccionado una opcion","Error",JOptionPane.ERROR_MESSAGE);
+        String amount = numOptionsCombobox.getSelectedItem().toString();
+        if (amount.contains("-")) {
+            JOptionPane.showMessageDialog(null, "Error. No se ha seleccionado una opcion", "Error", JOptionPane.ERROR_MESSAGE);
+            connect.desconectar();
             return;
         }
         //TODO obtener los índices de los seleccionados.
         int[] selectedIndex = table.getSelectedRows();
         //Insertar todas las opciones en la base de datos.
         for (int i = 0; i < selectedIndex.length; i++) {
-            connect.insertarOpcionEnCartera(wallet, call_options.get(selectedIndex[i]),amount);
+            connect.insertarOpcionEnCartera(wallet, call_options.get(selectedIndex[i]), amount);
         }
         connect.desconectar();
     }//GEN-LAST:event_addToAWalletActionPerformed
@@ -232,9 +233,8 @@ public class Call_options extends javax.swing.JPanel {
     private void walletComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_walletComboBoxActionPerformed
         Object change = walletComboBox.getSelectedItem();
         walletComboBox.setSelectedItem(change);
-        
-        
-        
+
+
     }//GEN-LAST:event_walletComboBoxActionPerformed
 
     private void walletComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_walletComboBoxMouseClicked
@@ -243,7 +243,7 @@ public class Call_options extends javax.swing.JPanel {
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         //TODO Obtener la cantidad de la tabla.
-       int row = this.table.getSelectedRow();
+        int row = this.table.getSelectedRow();
         String value = this.table.getModel().getValueAt(row, 5).toString(); //TODO cuando se cambie el modelo de las opciones cambiar esto?
         try {
             Integer amount = Integer.parseInt(value);
@@ -298,10 +298,10 @@ public class Call_options extends javax.swing.JPanel {
         Vector<Vector> rows = (Vector) tableData.getDataVector();
         Set<String> cbModel = new TreeSet<String>();
         for (Vector row : rows) {
-            if(cbModel.add((String)row.elementAt(7)))
+            if (cbModel.add((String) row.elementAt(7))) {
                 cb.addItem(row.elementAt(7));
+            }
         }
-        
 
     }
 
@@ -309,7 +309,7 @@ public class Call_options extends javax.swing.JPanel {
         ConnectSqlite connection = new ConnectSqlite();
         List l = connection.showAllWallets();
         connection.desconectar();
-        
+
         walletComboBox.removeAllItems();
 
         for (Object l1 : l) {
