@@ -239,7 +239,7 @@ public class Call_options extends javax.swing.JPanel {
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         //TODO Obtener la cantidad de la tabla.
        int row = this.table.getSelectedRow();
-        String value = this.table.getModel().getValueAt(row, 3).toString(); //TODO cuando se cambie el modelo de las opciones cambiar esto?
+        String value = this.table.getModel().getValueAt(row, 5).toString(); //TODO cuando se cambie el modelo de las opciones cambiar esto?
         try {
             Integer amount = Integer.parseInt(value);
             numOptionsCombobox.removeAllItems();

@@ -545,9 +545,7 @@ public class MainFrame extends javax.swing.JFrame {
         availableWalletList.setListData(setWallets.toArray());
         availableCarterasList.setListData(setWallets.toArray());
     }
-    
-    
-    
+   
     private class UpdateWorker extends SwingWorker<Void, Void>{
     
 

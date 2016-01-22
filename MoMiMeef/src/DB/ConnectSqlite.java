@@ -157,7 +157,10 @@ public class ConnectSqlite {
     public void insertarOpcionEnCartera(String cartera, Opcion opt,String amount){
         //String insertWallet ="INSERT INTO setOptionsWallets (Name) VALUES " + "(" + name + ")";
         int endAmount = lookOptionWallet(cartera,opt,amount);
-        if(endAmount == 0){
+        if(endAmount != 0){
+            removeOptionSpecificFromWallet(cartera,opt);
+            
+        }else{
             endAmount = Integer.parseInt(amount);
         }
         String insertAmount = Integer.toString(endAmount);
@@ -197,7 +200,9 @@ public class ConnectSqlite {
         return str;
     }
     
+    
     public void removeOptionFromWallet(String wallet, Opcion opt){
+        System.out.println(opt.toString());
         String q = "DELETE FROM SetOptionsWallets WHERE " + optionToDeleteSQLString(opt,wallet) +";";
         try {
            PreparedStatement pstm = connection.prepareStatement(q);
@@ -207,12 +212,33 @@ public class ConnectSqlite {
            System.out.println(e);
        }
     }
-
     private String optionToDeleteSQLString(Opcion opt,String name) {
         String str = "";
         str+= "Amount LIKE '";
         str += opt.Cantidad;
         str +="' AND ";
+        str +="Type LIKE '";
+        str += opt.Tipo;
+        str += "' AND ";
+        str += "Expiration LIKE '";
+        str += opt.Vencimiento;
+        str += "' AND ";
+        str += "Exercise LIKE '";
+        str += opt.Ejercicio;
+        str += "' AND ";
+        str += "DateBuy LIKE '";
+        str += opt.FechaCompra;
+        str += "' AND ";
+        str += " Price_Sale LIKE '";
+        str += opt.Venta_Precio;
+        str += "' AND ";
+        str += "Name LIKE '";
+        str += name;
+        str += "'";
+        return str;
+    }
+    private String optionSpecificToDeleteSQLString(Opcion opt,String name) {
+        String str = "";
         str +="Type LIKE '";
         str += opt.Tipo;
         str += "' AND ";
@@ -233,6 +259,17 @@ public class ConnectSqlite {
         str += "'";
         return str;
     }
+   public void removeOptionSpecificFromWallet(String wallet, Opcion opt){
+        System.out.println(opt.toString());
+        String q = "DELETE FROM SetOptionsWallets WHERE " + optionSpecificToDeleteSQLString(opt,wallet) +";";
+        try {
+           PreparedStatement pstm = connection.prepareStatement(q);
+           pstm.execute();
+           pstm.close();
+       }catch(Exception e){
+           System.out.println(e);
+       }
+    }
     public String DirectorioActual(){
         //String directorio = System.getProperty("java.class.path");
         File dir = new File("dbWallets.sqlite");
@@ -244,7 +281,7 @@ public class ConnectSqlite {
        return formato.format(calendario.getTime());
     }
     public int lookOptionWallet(String cartera, Opcion opt,String amount){
-        String option = "" + "Type LIKE '" + opt.Tipo + "' AND " + "Expiration LIKE '" + opt.Vencimiento + "' AND " + "Exercise LIKE '" + opt.Ejercicio + "' AND " + "Price_Sale LIKE '" + opt.Venta_Precio + "'AND " + "DateBuy LIKE '" + CurrentDate() + "'AND " + "Name LIKE '" + cartera + "'";
+        String option = "" + "Type LIKE '" + opt.Tipo + "' AND " + "Expiration LIKE '" + opt.Vencimiento + "' AND " + "Exercise LIKE '" + opt.Ejercicio + "' AND " + "Price_Sale LIKE '" + opt.Venta_Precio + "'AND " + "DateBuy LIKE '" + CurrentDate() + "'AND " + "Name LIKE '" + cartera + "'" ;
         try {
             this.statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM SetOptionsWallets WHERE " + option +  ";");

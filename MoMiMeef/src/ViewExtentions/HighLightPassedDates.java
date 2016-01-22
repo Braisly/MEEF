@@ -31,17 +31,16 @@ public class HighLightPassedDates extends AlternateColorJTable {
         
         return c;
     }
-
     private boolean thisDateIsPassed(int Index_row) {
         DefaultTableModel model =(DefaultTableModel) this.getModel();
         String date = model.getValueAt(Index_row, 7).toString();
         Date today = Calendar.getInstance().getTime();
-        DateFormat format = new SimpleDateFormat("dd MMM yyyy");
+        DateFormat format = new SimpleDateFormat("d MMM yyyy");
         try {
             //format.format(today);
             return today.after(format.parse(date));
         } catch (ParseException ex) {
-            System.out.println("Parse error");
+            System.out.println("Entro");
         }
         return false;
     }
