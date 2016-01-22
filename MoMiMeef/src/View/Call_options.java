@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 import javax.swing.ComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListDataListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -215,6 +216,10 @@ public class Call_options extends javax.swing.JPanel {
         //TODO obtener la cartera de destino.Del combobox
         String wallet = walletComboBox.getSelectedItem().toString();
         String amount =  numOptionsCombobox.getSelectedItem().toString();
+        if(amount.contains("-")){
+            JOptionPane.showMessageDialog(null, "Error. No se ha seleccionado una opcion","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         //TODO obtener los índices de los seleccionados.
         int[] selectedIndex = table.getSelectedRows();
         //Insertar todas las opciones en la base de datos.

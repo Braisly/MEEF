@@ -288,7 +288,7 @@ public class Cartera_table extends javax.swing.JPanel {
             for(Opcion option: Put_options.getPut_options()){
                 if(opt.Ejercicio.equals(option.Ejercicio) && opt.Vencimiento.equals(option.Vencimiento)){
                     opt.Precio_Vender = option.Compra_Precio;
-                    if(!opt.Precio_Vender.equals("-") && !opt.Venta_Precio.equals("-")){
+                    if(!opt.Precio_Vender.contains("-") && !opt.Venta_Precio.contains("-")){
                         double ganancia =  Double.parseDouble(opt.Precio_Vender.replace(",",".")) -Double.parseDouble(opt.Venta_Precio.replace(",", "."));
                         String Ganancia = String.valueOf(ganancia);
                         opt.Ganancia = Ganancia.replace(".",",");
@@ -301,7 +301,7 @@ public class Cartera_table extends javax.swing.JPanel {
             for(Opcion option: Call_options.getCall_options()){
                 if(opt.Ejercicio.equals(option.Ejercicio) && opt.Vencimiento.equals(option.Vencimiento)){
                     opt.Precio_Vender = option.Compra_Precio; 
-                    if(!opt.Precio_Vender.equals("-") && !opt.Venta_Precio.equals("-")){
+                    if(!opt.Precio_Vender.contains("-") && !opt.Venta_Precio.contains("-")){
                         double ganancia =  Double.parseDouble(opt.Precio_Vender.replace(",",".")) -Double.parseDouble(opt.Venta_Precio.replace(",", "."));
                         String Ganancia = String.valueOf(ganancia);
                         opt.Ganancia = Ganancia.replace(".",",");
@@ -326,6 +326,10 @@ public class Cartera_table extends javax.swing.JPanel {
     private double getTotalGain() {
         double result = 0;
         for (Opcion opt : wallet.getOpciones()) {
+            if(opt.Ganancia == null || opt.Cantidad == null){
+                result +=0;
+                continue;
+            }
             result += Double.parseDouble(opt.Ganancia.replace(",", "."))* Double.parseDouble(opt.Cantidad.replace(",", "."));
         }
         return result;
@@ -334,6 +338,10 @@ public class Cartera_table extends javax.swing.JPanel {
     private double getTotalInvestment() {
         double result = 0;
         for (Opcion opt : wallet.getOpciones()) {
+            if(opt.Venta_Precio == null || opt.Cantidad == null){
+                result +=0;
+                continue;
+            }
             result += Double.parseDouble(opt.Venta_Precio.replace(",", ".")) * Double.parseDouble(opt.Cantidad.replace(",", "."));
         }
         return result;
@@ -342,6 +350,10 @@ public class Cartera_table extends javax.swing.JPanel {
     private Double getTotalValue() {
         double result = 0;
         for (Opcion opt : wallet.getOpciones()) {
+            if(opt.Precio_Vender == null || opt.Cantidad == null || opt.Precio_Vender.contains("-")){
+                result +=0;
+                continue;
+            }
             result += Double.parseDouble(opt.Precio_Vender.replace(",","."))* Double.parseDouble(opt.Cantidad.replace(",", "."));
         }
         return result;

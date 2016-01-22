@@ -44,7 +44,7 @@ public class LoadingDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("MoMiMeef");
-        setBackground(new java.awt.Color(126, 231, 115));
+        setBackground(new java.awt.Color(240, 240, 240));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);

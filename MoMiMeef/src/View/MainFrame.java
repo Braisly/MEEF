@@ -336,7 +336,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("MoMiMeef");
-        setBackground(new java.awt.Color(126, 231, 115));
         setIconImage(new javax.swing.ImageIcon("logo.png").getImage());
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

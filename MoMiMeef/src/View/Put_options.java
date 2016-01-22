@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -202,12 +203,16 @@ public class Put_options extends javax.swing.JPanel {
         ConnectSqlite connect = new ConnectSqlite();
         //TODO obtener la cartera de destino.Del combobox
         String wallet = walletComboBox.getSelectedItem().toString();
-        String amount =  numOptionsCombobox.getSelectedItem().toString();
+        String amount = numOptionsCombobox.getSelectedItem().toString();
+        if (amount.contains("-")) {
+            JOptionPane.showMessageDialog(null, "Error. No se ha seleccionado una opcion", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         //TODO obtener los índices de los seleccionados.
         int[] selectedIndex = table.getSelectedRows();
         //Insertar todas las opciones en la base de datos.
         for (int i = 0; i < selectedIndex.length; i++) {
-         connect.insertarOpcionEnCartera(wallet, put_options.get(selectedIndex[i]),amount);
+            connect.insertarOpcionEnCartera(wallet, put_options.get(selectedIndex[i]), amount);
         }
         connect.desconectar();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -233,7 +238,7 @@ public class Put_options extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tableMouseClicked
 
-     public void updateInfo(){
+    public void updateInfo() {
         System.out.println("Test flag2");
         conection.divideOptions();
         put_options = conection.OpcionesPUT;
@@ -299,6 +304,7 @@ public class Put_options extends javax.swing.JPanel {
             walletComboBox.addItem(l1.toString());
         }
     }
+
     public static ArrayList<Opcion> getPut_options() {
         return put_options;
     }
