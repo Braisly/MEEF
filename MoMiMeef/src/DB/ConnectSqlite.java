@@ -18,26 +18,18 @@ public class ConnectSqlite {
     private Connection connection = null;
     private ResultSet resultSet = null;
     private Statement statement = null;
-    //private String db = "\\Wallets.sqlite";
-    //private String db = "/Users/lala/MoMiMeef/ProyectoMEFF/Wallets.sqlite";
-    //private String db= "C:\\Users\\adriano\\Documents\\NetBeansProjects\\MoMiMeef\\ProyectoMEFF\\Wallets.sqlite";    
-    //private String db= "C:\\Users\\adriano\\Documents\\NetBeansProjects\\MoMiMeef\\ProyectoMEFF\\dbNuevo.sqlite";    
-    //Constructor de clase que se conecta a la base de datos SQLite 
+   
     public ConnectSqlite(){
         try{
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + DirectorioActual());
-            //System.out.println("Conectado a la base de datos SQLite [ " + this.db + "]");
-            //System.out.println(DirectorioActual());
+            
         }catch(Exception e){
             System.out.println(e);
         }
     }
     public boolean insert(String table, String fields, String values){
        boolean res=false;
-       //Se arma la consulta
-       //String q=" INSERT INTO " + table + " ( " + fields + " ) VALUES ( " + values + " ) ";
-       //String q=" INSERT INTO SetWallets (Name) VALUES ('prueba') ";
        String q=" INSERT INTO SetOptionsWallets (Hour,Volume,Last,Volume_Buy,Price_Buy,Volume_Sale,Price_Sale,Expiration,Exercise,Type,Name) VALUES ('22:10','2','','10','50','6','10','50','100','PUT','cartera') ";
        //se ejecuta la consulta
        try {
@@ -69,7 +61,6 @@ public class ConnectSqlite {
             this.statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM setOptionsWallets ; ");
             while (resultSet.next()){
-                //res+=resultSet.getString("id") + " | " + resultSet.getString("nombre") + " | " +  resultSet.getString("apellido") + " \n ";
                 res+=resultSet.getString("Hour") + " | " + resultSet.getString("Volume") + " | " +  resultSet.getString("Last") + " | " + resultSet.getString("Volume_Buy") + " | " +  resultSet.getString("Price_Buy") + " | " + resultSet.getString("Volume_Sale") + " | " + resultSet.getString("Price_Sale") + " | " +  resultSet.getString("Expiration") + " | " + resultSet.getString("Exercise") + " | " +  resultSet.getString("Type")+ " | " + resultSet.getString("Name") + "\n";
             }
         }catch (SQLException ex) {
