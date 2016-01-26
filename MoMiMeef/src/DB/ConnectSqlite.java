@@ -28,47 +28,6 @@ public class ConnectSqlite {
             System.out.println(e);
         }
     }
-    public boolean insert(String table, String fields, String values){
-       boolean res=false;
-       String q=" INSERT INTO SetOptionsWallets (Hour,Volume,Last,Volume_Buy,Price_Buy,Volume_Sale,Price_Sale,Expiration,Exercise,Type,Name) VALUES ('22:10','2','','10','50','6','10','50','100','PUT','cartera') ";
-       //se ejecuta la consulta
-       try {
-           PreparedStatement pstm = connection.prepareStatement(q);
-           pstm.execute();
-           pstm.close();
-           res=true;
-       }catch(Exception e){
-           System.out.println(e);
-           System.out.println("Se produjo una excepcion");
-       }
-       return res;
-    }
-    
-    public String select(){
-        String res="Nombres de las carteras" +"\n";
-        try {
-            this.statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM setWallets ; ");
-            while (resultSet.next()){
-                //res+=resultSet.getString("id") + " | " + resultSet.getString("nombre") + " | " +  resultSet.getString("apellido") + " \n ";
-                res+=resultSet.getString("Name") + "\n";
-            }
-        }catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        res += "Opciones que están en las carteras" +"\n";
-        try {
-            this.statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM setOptionsWallets ; ");
-            while (resultSet.next()){
-                res+=resultSet.getString("Hour") + " | " + resultSet.getString("Volume") + " | " +  resultSet.getString("Last") + " | " + resultSet.getString("Volume_Buy") + " | " +  resultSet.getString("Price_Buy") + " | " + resultSet.getString("Volume_Sale") + " | " + resultSet.getString("Price_Sale") + " | " +  resultSet.getString("Expiration") + " | " + resultSet.getString("Exercise") + " | " +  resultSet.getString("Type")+ " | " + resultSet.getString("Name") + "\n";
-            }
-        }catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return res;
-    }
-    
     public List showAllWallets(){
         List <String> wallets = new ArrayList<>();
         try {
@@ -117,7 +76,6 @@ public class ConnectSqlite {
                 statement.close();   
             }
             connection.close();
-            //System.out.println("Desconectado de la base de datos [ " + this.db + "]");
         }catch (SQLException ex) {
             System.out.println(ex);
         }
